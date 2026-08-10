@@ -1,0 +1,65 @@
+generated: '2026-08-09'
+method: searched
+source: https://github.com/cionicwear/cionic-data
+note: >-
+  CIONIC publishes no versioning policy, no deprecation policy, no SLA and no status
+  page. What is recorded here is observed behaviour, not a published commitment.
+versioning:
+  scheme: uri-path
+  current: '2.0'
+  docs: null
+  observed:
+  - version: '2.0'
+    source: https://cionic.com/static/js/portal.js
+    note: Portal.VERSION used by the researcher/clinician web portal
+  - version: '0.22'
+    source: https://github.com/cionicwear/cionic-data/blob/main/cionic/api.py
+    note: apiver used by the first-party Python client
+  concern: >-
+    Two version strings are live simultaneously against the same services and both
+    answer 401 rather than 404, so neither is retired. No policy explains the
+    relationship between them.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  evidence: >-
+    No Deprecation or Sunset header observed; no deprecation or migration page found
+    on cionic.com, support.cionic.com or the GitHub organization.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probed:
+  - url: https://status.cionic.com/
+    result: DNS does not resolve
+changelog:
+  url: null
+  evidence: >-
+    The cionic-data repository publishes no releases and no tags; no dated changelog
+    was found on the site or docs.
+support:
+  url: https://support.cionic.com/
+  email: support@cionic.com
+  phone: '+1-888-481-3724'
+product_lifecycle:
+  current_product: Neural Sleeve 2
+  predecessor: Neural Sleeve
+  note: >-
+    Both generations are documented side by side in the help centre user manuals, so
+    the first-generation device is still supported.
+deprecated_operations: []
+x-evidence:
+- url: https://status.cionic.com/
+  http_status: 0
+  note: host does not resolve
+  fetched: '2026-08-09'
+- url: https://api.github.com/repos/cionicwear/cionic-data/releases
+  http_status: 200
+  note: empty array — no releases published
+  fetched: '2026-08-09'
+- url: https://api.github.com/repos/cionicwear/cionic-data/tags
+  http_status: 200
+  note: empty array — no tags published
+  fetched: '2026-08-09'

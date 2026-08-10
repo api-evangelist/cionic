@@ -1,0 +1,93 @@
+generated: '2026-08-09'
+method: probed
+source: live GET probes of every CIONIC host
+result: none
+note: >-
+  No /.well-known document of any kind is published on any CIONIC host. This file is
+  the probe record only — it is deliberately NOT wired as a WellKnown pointer in
+  apis.yml, because nothing was found.
+soft_404_warning: >-
+  cionic.com and www.cionic.com answer HTTP 200 with the 105552-byte marketing
+  homepage for EVERY unknown path, including every /.well-known/* path, /llms.txt and
+  /openapi.json. Each probe was diffed against a control path
+  (/__ae_control_probe_xyz) and matched it byte for byte, so all of these are soft
+  404s, not documents. The other hosts return honest 404s.
+hosts:
+- host: cionic.com
+  control_path: /__ae_control_probe_xyz
+  control_status: 200
+  control_bytes: 105552
+  behaviour: soft-404 (200 + homepage for every unknown path)
+  documents:
+  - {path: /.well-known/security.txt, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/openid-configuration, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/oauth-authorization-server, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/oauth-protected-resource, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/api-catalog, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/ai-plugin.json, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/agent-card.json, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/agent.json, status: 200, soft_404: true, found: false}
+  - {path: /llms.txt, status: 200, soft_404: true, found: false}
+- host: www.cionic.com
+  control_status: 200
+  control_bytes: 105552
+  behaviour: soft-404
+  documents:
+  - {path: /.well-known/security.txt, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/openid-configuration, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/oauth-authorization-server, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/agent-card.json, status: 200, soft_404: true, found: false}
+  - {path: /.well-known/agent.json, status: 200, soft_404: true, found: false}
+  - {path: /llms.txt, status: 200, soft_404: true, found: false}
+  - {path: /robots.txt, status: 200, soft_404: false, found: true, note: real robots.txt,
+      bytes: 165}
+  - {path: /sitemap.xml, status: 200, soft_404: false, found: true, bytes: 47403}
+- host: support.cionic.com
+  control_status: 404
+  behaviour: honest-404
+  documents:
+  - {path: /.well-known/security.txt, status: 404, found: false}
+  - {path: /.well-known/agent-card.json, status: 404, found: false}
+  - {path: /.well-known/agent.json, status: 404, found: false}
+  - {path: /llms.txt, status: 404, found: false}
+- host: go.cionic.com
+  control_status: 404
+  behaviour: honest-404
+  documents:
+  - {path: /.well-known/security.txt, status: 404, found: false}
+  - {path: /.well-known/agent-card.json, status: 404, found: false}
+  - {path: /.well-known/agent.json, status: 404, found: false}
+  - {path: /llms.txt, status: 404, found: false}
+- host: trials.cionic.com
+  control_status: 404
+  behaviour: honest-404
+  documents:
+  - {path: /.well-known/security.txt, status: 404, found: false}
+  - {path: /.well-known/agent-card.json, status: 404, found: false}
+  - {path: /.well-known/agent.json, status: 404, found: false}
+  - {path: /llms.txt, status: 404, found: false}
+- host: careers.cionic.com
+  control_status: 404
+  behaviour: honest-404
+  documents:
+  - {path: /.well-known/security.txt, status: 404, found: false}
+  - {path: /.well-known/agent-card.json, status: 404, found: false}
+  - {path: /.well-known/agent.json, status: 404, found: false}
+  - {path: /llms.txt, status: 404, found: false}
+- host: static.cionic.com
+  control_status: 404
+  behaviour: honest-404 (S3-style XML)
+  documents:
+  - {path: /.well-known/security.txt, status: 404, found: false}
+  - {path: /.well-known/agent-card.json, status: 404, found: false}
+  - {path: /llms.txt, status: 404, found: false}
+api_host_probes:
+- {path: /a/v2.0/openapi.json, status: 404, content_type: application/json, found: false}
+- {path: /c/v2.0/openapi.json, status: 404, found: false}
+- {path: /c/v2.0/swagger.json, status: 404, found: false}
+- {path: /c/v2.0/docs, status: 404, found: false}
+- {path: /mcp, status: 405, note: POST tools/list rejected — marketing host, not an
+    MCP server, found: false}
+- {path: /graphql, status: 405, note: POST introspection rejected — not a GraphQL
+    endpoint, found: false}
+checked: '2026-08-09'

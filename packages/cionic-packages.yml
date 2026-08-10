@@ -1,0 +1,63 @@
+generated: '2026-08-09'
+method: searched
+source: https://github.com/cionicwear/cionic-data
+notes: >-
+  CIONIC publishes one first-party client library. It is distributed as source from
+  the company GitHub organization (cionicwear) under an MIT license, not from a
+  package registry — PyPI (cionic, cionic-data) and npm (cionic) were probed and
+  returned 404. The package metadata in pyproject.toml declares name "cionic",
+  version 0.1.0, built with setuptools, and is installed from a clone plus
+  requirements.txt.
+packages:
+- language: python
+  registry: github
+  name: cionic
+  url: https://github.com/cionicwear/cionic-data
+  install: git clone https://github.com/cionicwear/cionic-data && pip3 install -r requirements.txt
+  official: true
+  license: MIT
+  description: >-
+    CIONIC Data Tools — the official Python client for the CIONIC research platform
+    REST APIs plus the signal-processing, gait-metrics, kinematics and plotting
+    libraries used to analyse collection data. cionic/api.py implements the
+    authenticated GET/POST/PUT/DELETE helpers against the /a, /c and /w services.
+  modules:
+  - cionic.api
+  - cionic.dsp
+  - cionic.gait_metrics
+  - cionic.kinematics
+  - cionic.segmenter
+  - cionic.foot_segmenter
+  - cionic.plotting
+  - cionic.stats
+  - cionic.triggers
+  - cionic.npz_utils
+  - cionic.json2npy
+registries_probed:
+- registry: pypi
+  query: cionic
+  url: https://pypi.org/pypi/cionic/json
+  status: 404
+- registry: pypi
+  query: cionic-data
+  url: https://pypi.org/pypi/cionic-data/json
+  status: 404
+- registry: npm
+  query: cionic
+  url: https://registry.npmjs.org/cionic
+  status: 404
+related:
+- name: CIONIC JupyterLab analysis image
+  url: https://github.com/cionicwear/cionic-data/tree/main/jupyter
+  kind: docker
+  official: true
+  description: >-
+    Dockerised JupyterLab environment (Python 3.11.4) shipping CIONIC's standard
+    analysis notebooks — gait, metrics, electrode configuration, signal parsing.
+x-evidence:
+  fetched: '2026-08-09'
+  github_org: https://github.com/cionicwear
+  repo_api: https://api.github.com/repos/cionicwear/cionic-data
+  http_status: 200
+  license: MIT
+  pushed_at: '2026-06-11T19:04:47Z'

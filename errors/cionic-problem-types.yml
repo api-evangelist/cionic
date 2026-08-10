@@ -1,0 +1,92 @@
+generated: '2026-08-09'
+method: probed
+source: >-
+  Anonymous probes of https://cionic.com/a/v2.0/* and https://cionic.com/c/v2.0/*
+  plus the status handling in https://github.com/cionicwear/cionic-data/blob/main/cionic/api.py
+format: custom-json
+media_type: application/json
+envelope:
+  shape: '{"error": "<message>"}'
+  fields:
+  - name: error
+    type: string
+    description: Human-readable message. No machine-readable code, type URI or detail
+      field is returned.
+rfc9457: false
+note: >-
+  CIONIC publishes no error reference and no OpenAPI. Every entry below is either an
+  unauthenticated response observed live or a status code the first-party client
+  explicitly handles. Statuses the client merely tolerates generically are not listed.
+problems:
+- status: 401
+  title: Unauthorized
+  body: '{"error":"Unauthorized"}'
+  media_type: application/json
+  meaning: Missing or invalid x-cionic-user token.
+  observed_on:
+  - GET https://cionic.com/a/v2.0/accounts/@me
+  - GET https://cionic.com/a/v2.0/accounts
+  - GET https://cionic.com/a/v2.0/accounts/@me/token.json
+  method: probed
+- status: 401
+  title: Unauthorized (collections service)
+  body: ''
+  media_type: text/html
+  meaning: >-
+    The /c collections service returns a bare 401 with an empty body rather than the
+    JSON envelope used by the /a accounts service — the two services are inconsistent.
+  observed_on:
+  - GET https://cionic.com/c/v2.0/cionic/collections
+  method: probed
+- status: 404
+  title: Not found
+  body: '{"error":"Not Found"}'
+  media_type: application/json
+  meaning: Unknown route on the accounts service.
+  observed_on:
+  - GET https://cionic.com/a/v2.0/openapi.json
+  method: probed
+- status: 405
+  title: Method not allowed
+  meaning: >-
+    Returned by GET on the OAuth token endpoint, which accepts POST only.
+  observed_on:
+  - GET https://cionic.com/oauth/token
+  method: probed
+- status: 409
+  title: Already granted
+  meaning: The organization role being added is already held by the account.
+  source_operation: POST /a/v{version}/{org}/accounts/{xid}/roles
+  method: derived
+  evidence: ROLE_ADD_RESPONSE in cionic/api.py maps 409 to "Already Granted"
+- status: 404
+  title: Not granted
+  meaning: The organization role being removed was not held by the account.
+  source_operation: DELETE /a/v{version}/{org}/accounts/{xid}/roles/{role_id}
+  method: derived
+  evidence: ROLE_REM_RESPONSE in cionic/api.py maps 404 to "Not Granted"
+- status: 502
+  title: Study metadata timeout
+  meaning: >-
+    A study with too much data times out fetching collection metadata. The client
+    works around it by fetching per protocol instead.
+  source_operation: GET /w/v{version}/{org}/collections?sxid={study}
+  method: derived
+  evidence: >-
+    Comment in cionic/api.py get_study_metadata referencing
+    cionicwear/cionic-collection issue 251
+success_statuses:
+- status: 200
+  used_by: GET, PUT, DELETE
+- status: 201
+  used_by: POST — resource creation, including signed storage URL issuance
+- status: 202
+  used_by: POST — accepted, including collection file-upload confirmation and role grant
+x-evidence:
+  fetched: '2026-08-09'
+  control_probe:
+    url: https://cionic.com/__ctrl_probe
+    http_status: 302
+    note: >-
+      The marketing site soft-404s to the homepage, so API responses were confirmed
+      against a control path before being recorded.

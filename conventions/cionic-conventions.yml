@@ -1,0 +1,119 @@
+generated: '2026-08-09'
+method: searched
+source: https://github.com/cionicwear/cionic-data/blob/main/cionic/api.py
+note: >-
+  Cross-cutting semantics of the CIONIC research platform REST APIs, read from the
+  first-party open-source client and confirmed against anonymous live probes. CIONIC
+  publishes no OpenAPI and no public API reference, so anything not observable from
+  the client or an unauthenticated response is recorded as not-published rather than
+  guessed.
+base_url:
+  pattern: https://{server}/{microservice}/v{version}/{path}
+  server: cionic.com
+  services:
+  - prefix: /a
+    name: accounts
+    surface: accounts, @me, tokens, participants, timezone, roles, chats, appointments
+  - prefix: /c
+    name: collections
+    surface: collections, files, streams, neighbors, protocols, protocol versions,
+      studies, study participants, participants, jobs, surveys, apps
+  - prefix: /w
+    name: web
+    surface: collection metadata for a study (used by get_study_metadata)
+  org_scoping: >-
+    Most paths are scoped by organization shortname immediately after the version
+    segment, e.g. /c/v2.0/{org}/collections. Account-level paths under /a are not
+    org-scoped.
+versioning:
+  scheme: uri-path
+  observed_versions:
+  - version: '2.0'
+    used_by: web portal JavaScript (static/js/portal.js, Portal.VERSION)
+  - version: '0.22'
+    used_by: cionic-data Python client (cionic/api.py, apiver)
+  note: >-
+    Two live version strings are in use simultaneously and both answer. There is no
+    published versioning policy, no version header, and no deprecation signalling.
+authentication:
+  style: token header
+  header: x-cionic-user
+  oauth2: authorization code at /oauth/authorize and /oauth/token
+  detail: authentication/cionic-authentication.yml
+idempotency:
+  supported: false
+  evidence: >-
+    No idempotency key header, parameter or retry contract appears anywhere in the
+    first-party client or its documentation.
+pagination:
+  style: not-published
+  evidence: >-
+    The client passes a client-side limit when selecting collections to download but
+    no page, cursor, offset or link-header pagination is exercised or documented.
+filtering:
+  style: query parameters
+  observed_parameters:
+  - name: email
+    used_on: GET /a/v{version}/accounts
+  - name: sxid
+    description: study xid
+    used_on: GET /w/v{version}/{org}/collections, GET /c/v{version}/{org}/protocols
+  - name: pxid
+    description: protocol xid
+    used_on: GET /w/v{version}/{org}/collections
+  - name: study
+    description: study shortname
+    used_on: GET /c/v{version}/{org}/collections
+  - name: num
+    description: collection number
+    used_on: GET /c/v{version}/{org}/collections
+identifiers:
+  primary: xid
+  description: >-
+    Opaque string identifiers named xid on every resource (collection xid, study xid,
+    protocol xid, participant xid, account xid). Organizations and studies also carry
+    a human "shortname" used interchangeably in paths and query parameters.
+content_type: application/json
+error_envelope:
+  shape: '{"error": "<message>"}'
+  media_type: application/json
+  rfc9457: false
+  detail: errors/cionic-problem-types.yml
+file_transfer:
+  pattern: signed-url upload
+  steps:
+  - GET /c/v{version}/{org}/collections/{xid}/files — list existing files
+  - 'POST /c/v{version}/{org}/collections/{xid}/files with {"files": ["name"]} — returns
+    a signed Google Cloud Storage URL per filename, 201'
+  - PUT the file body to the returned storage URL with Content-Type application/octet-stream
+  - 'POST /c/v{version}/{org}/collections/{xid} with {"uploaded_files": [...]} — confirms
+    the upload and moves the collection out of "in progress", 202'
+  note: >-
+    Downloads follow the same shape in reverse; npz stream bundles are fetched from
+    /c/v{version}/{org}/collections/{xid}/streams/npz.
+rate_limiting:
+  signalled: false
+  evidence: No rate-limit headers documented or handled by the client.
+request_tracing:
+  header: not-published
+caching:
+  server_headers:
+  - etag
+  - 'cache-control: max-age=0, must-revalidate'
+  client_side: >-
+    The Python client offers an optional local cachepath for GET responses; this is
+    a client convenience, not a server contract.
+data_formats:
+  npz:
+    description: >-
+      Collection sensor data is packaged as NumPy .npz bundles containing a segments
+      table plus per-device streams (fquat quaternions, emg raw EMG, adcf filtered
+      EMG, peak/trough detectors, protocol triggers) and jsonl/json sidecars
+      (devices, gwlabels, segments, collection, protocol).
+    reference: https://github.com/cionicwear/cionic-data/blob/main/npz.md
+cross_links:
+  authentication: authentication/cionic-authentication.yml
+  errors: errors/cionic-problem-types.yml
+  lifecycle: lifecycle/cionic-lifecycle.yml
+  cli: cli/cionic-cli.yml
+  packages: packages/cionic-packages.yml

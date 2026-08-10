@@ -1,0 +1,81 @@
+generated: '2026-08-09'
+method: searched
+source: https://github.com/cionicwear/cionic-data/blob/main/scripts/README.md
+name: CIONIC Data Tools scripts
+description: >-
+  CIONIC ships a first-party set of command-line scripts in the cionic-data
+  repository for researchers working with platform data. They are Python entry
+  points run from a clone rather than an installed binary, and they authenticate
+  with a token.json downloaded from the researcher web portal.
+distribution: source
+install:
+- method: git
+  command: git clone https://github.com/cionicwear/cionic-data
+- method: pip
+  command: pip3 install -r requirements.txt
+- method: docker
+  command: docker compose up
+  note: jupyter/docker-compose.yml provides the containerised environment
+authentication:
+  method: token-file
+  default_path: token.json
+  how_to_obtain: >-
+    Log in at https://cionic.com/a, open the profile menu at the top right, choose
+    "Download Token", and save token.json to the root of cionic-data.
+  environment_variable: CIONIC_ACCESS_TOKEN
+  note: >-
+    CIONIC_ACCESS_TOKEN is an OAuth bearer token exchanged at
+    https://{domain}/oauth/user for the platform access token.
+commands:
+- name: download.py
+  path: scripts/download.py
+  summary: Fetch and segment collection npz files to a local directory.
+  usage: ./scripts/download.py [orgid] [studyid] [-n nums] [-c streams] [-o outdir]
+    [-t token] [-p protoid] [-l limit] [-f]
+  flags:
+  - flag: -c
+    description: generate CSV for the listed streams (for example emg, fquat)
+  - flag: -f
+    description: download additional collection files including videos and notes
+  - flag: -l
+    description: number of most recent collections to fetch (default 20)
+  - flag: -n
+    description: explicit collection numbers to download
+  - flag: -o
+    description: output directory
+  - flag: -p
+    description: protocol shortname to download
+  - flag: -t
+    description: path to the auth credentials json file
+- name: auth.py
+  path: scripts/auth.py
+  summary: Grant or revoke organization roles for a user. Requires the org admin role.
+  usage: ./scripts/auth.py [email] [org] [-a roles] [-r roles] [-t token]
+  roles:
+  - analyst
+  - collector
+  - admin
+- name: upload_electrode_config.py
+  path: scripts/upload_electrode_config.py
+  summary: >-
+    Upload a custom electrode configuration used for mapping and calibration
+    displays in a study inside the CIONIC app.
+  usage: ./scripts/upload_electrode_config.py [org] [study] [config_name] [json_path]
+    [--token-path path] [--new]
+- name: download_electrode_config.py
+  path: scripts/download_electrode_config.py
+  summary: Download the electrode configurations attached to a study or an entire org.
+  usage: ./scripts/download_electrode_config.py [org] [study] [--token-path path]
+flows:
+- name: Sync a study
+  steps:
+  - Download token.json from the researcher portal profile menu.
+  - ./scripts/download.py cionic sample -l 5 -f
+  - Segmented output lands in recordings/<orgid>/<studyid>/<collnum>/.
+- name: Grant a collaborator the analyst role
+  steps:
+  - ./scripts/auth.py researcher@university.edu myorg -a analyst
+x-evidence:
+  fetched: '2026-08-09'
+  url: https://raw.githubusercontent.com/cionicwear/cionic-data/main/scripts/README.md
+  http_status: 200
