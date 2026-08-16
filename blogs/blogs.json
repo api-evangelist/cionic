@@ -1,0 +1,21 @@
+{
+  "repo": "cionic",
+  "feeds": [
+    {
+      "source": "https://support.cionic.com/",
+      "feed_url": "https://support.cionic.com/rss.xml",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    },
+    {
+      "source": "https://go.cionic.com/",
+      "feed_url": "https://go.cionic.com/rss.xml",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 2,
+  "fetched": "2026-08-15T12:22:01Z"
+}
