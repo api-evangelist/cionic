@@ -64,6 +64,10 @@ apis:
   humanURL: https://cionic.com/platform
   baseURL: https://cionic.com/a/v2.0/
   tags:
+  - Account
+  - Authentication
+  - Identity
+  tags_raw:
   - Accounts
   - Authentication
   - Identity
