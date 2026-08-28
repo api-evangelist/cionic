@@ -12,6 +12,19 @@ description: 'CIONIC Inc. is a neurotechnology company in Scotts Valley, Califor
   participant data infrastructure. The company publishes an open-source Python client
   and command-line tooling for that platform''s REST APIs, but the API reference and
   machine-readable contract itself sit behind a researcher account.'
+deliveryModel:
+  model: open-core
+  license: MIT
+  open_source: true
+  commercial: true
+  callable_host: false
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://static.cionic.com/www/images/logo_green.svg
 url: https://raw.githubusercontent.com/api-evangelist/cionic/refs/heads/main/apis.yml
 x-type: company
