@@ -64,5 +64,94 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-CIONIC is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+CIONIC Inc. is a neurotechnology company in Scotts Valley, California, founded in 2018 by Jeremiah Robison, that builds "bionic clothing" for people with neurological conditions that affect walking. Its flagship product, the FDA-cleared Cionic Neural Sleeve, combines inertial and surface-EMG sensing with functional electrical stimulation to analyze gait and assist dorsiflexion in conditions such as foot drop, multiple sclerosis, stroke and cerebral palsy. Alongside the consumer device CIONIC operates a research platform — the Cionic Research Kit — offering on-body hardware, iOS and Android collection apps, a web research portal for study and protocol management, a hosted JupyterLab analysis environment, and HIPAA-compliant participant data infrastructure. The company publishes an open-source Python client and command-line tooling for that platform's REST APIs, but the API reference and machine-readable contract itself sit behind a researcher account.
+
+**Areas:** Company · Health · Medical Devices · Wearables · Neurotechnology · Research · Clinical Research · Biomechanics · Rehabilitation · Digital Health
+
+## CIONIC on APIs.io
+
+Everything profiled for CIONIC is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cionic/](https://apis.io/providers/cionic/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [CIONIC Research Platform API](https://apis.io/apis/cionic/research-platform-api/) — The collections service of the CIONIC research platform. Path-versioned REST endpoints under /c/v{version}/{org}/ covering studies, protocols and protocol…
+- [CIONIC Accounts API](https://apis.io/apis/cionic/accounts-api/) — The accounts service of the CIONIC research platform. Path-versioned REST endpoints under /a/v{version}/ covering account lookup and creation, the…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cionic Authentication](https://apis.io/security/cionic/cionic-authentication/)
+- [Cionic Domain Security](https://apis.io/security/cionic/cionic-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.cionic.com/)
+- [Documentation](https://github.com/cionicwear/cionic-data/blob/main/README.md)
+- [Getting started](https://github.com/cionicwear/cionic-data/blob/main/scripts/README.md)
+- [Sign up](https://cionic.com/a)
+- [Support](https://support.cionic.com/)
+- [Blog](https://go.cionic.com/)
+- [Compliance](https://www.cionic.com/legal/data-disclosure)
+- [Terms of service](https://www.cionic.com/legal/terms)
+- [Privacy policy](https://www.cionic.com/legal/privacy)
+- [GitHub](https://github.com/cionicwear)
+
+## API Evangelist rating
+
+**Kin Score 29.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 64.3 |
+| Access clarity | 31.6 |
+
+**Agent readiness 8.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 20.3** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cionic/](https://apis.io/providers/cionic/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for CIONIC: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cionic/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
